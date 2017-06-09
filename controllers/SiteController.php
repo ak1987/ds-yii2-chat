@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Messages;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,6 +62,23 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionSendMsg()
+    {
+        $data = Yii::$app->request->post();
+        $msg = new Messages();
+        $msg->text = $data['msg'];
+        $msg->user_name = $data['user'];
+        $msg->timestamp = time();
+        $msg->type = 1;
+        $msg->save();
     }
 
     /**
